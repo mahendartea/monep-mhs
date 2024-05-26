@@ -7,6 +7,8 @@ use App\Models\Agenda;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -21,31 +23,41 @@ class AgendaResource extends Resource
 {
     protected static ?string $model = Agenda::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
     protected static ?string $navigationLabel = 'Agenda';
+
+    protected static ?string $navigationGroup = 'Agenda';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('no_rapat')->label('Nomor Rapat')->required(),
-                Forms\Components\TextInput::make('judul_agenda')->label('Judul Agenda')->required(),
-                Forms\Components\Textarea::make('perihal')->label('Perihal'),
-                Forms\Components\DatePicker::make('tgl')->label('Tanggal Agenda')->required(),
-                Forms\Components\TimePicker::make('pukul_mulai')->label('Mulai Pukul'),
-                Forms\Components\TimePicker::make('pukul_selesai')->label('Selesai Pukul'),
-                Forms\Components\Select::make('user_id')->label('Pimpinan Rapat')
-                    ->options(User::all()->pluck('name', 'id'))
-                    ->searchable(),
-                Forms\Components\TextInput::make('tempat')->label('Tempat'),
-                Forms\Components\Textarea::make('notulensi')->label('Notulen'),
-                Forms\Components\FileUpload::make('file')
-                    ->label('File Agenda')
-                    ->downloadable()
-                    ->previewable(true)
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
-                Forms\Components\Toggle::make('status')->label('Status')->required()->default(true),
+                Section::make('Agenda')->id('agenda')->schema([
+                    Grid::make([
+                        'default' => 1,
+                        'md' => 2,
+                    ])
+                        ->schema([
+                            Forms\Components\TextInput::make('no_rapat')->label('Nomor Rapat')->required(),
+                            Forms\Components\TextInput::make('judul_agenda')->label('Judul Agenda')->required(),
+                            Forms\Components\Textarea::make('perihal')->label('Perihal'),
+                            Forms\Components\DatePicker::make('tgl')->label('Tanggal Agenda')->required(),
+                            Forms\Components\TimePicker::make('pukul_mulai')->label('Mulai Pukul'),
+                            Forms\Components\TimePicker::make('pukul_selesai')->label('Selesai Pukul'),
+                            Forms\Components\Select::make('user_id')->label('Pimpinan Rapat')
+                                ->options(User::all()->pluck('name', 'id'))
+                                ->searchable(),
+                            Forms\Components\TextInput::make('tempat')->label('Tempat'),
+                            Forms\Components\Textarea::make('notulensi')->label('Notulen'),
+                            Forms\Components\FileUpload::make('file')
+                                ->label('File Agenda')
+                                ->downloadable()
+                                ->previewable(true)
+                                ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
+                            Forms\Components\Toggle::make('status')->label('Status')->required()->default(true),
+                        ])
+                ])
             ]);
     }
 

@@ -8,6 +8,7 @@ use App\Models\Agenda;
 use App\Models\Notification;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -22,22 +23,28 @@ class NotificationResource extends Resource
 {
     protected static ?string $model = Notification::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-bell-alert';
+
+    protected static ?string $navigationLabel = 'Pemberitahuan';
+
+    protected static ?string $navigationGroup = 'Agenda';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Select::make('agenda_id')->label('Agenda')
-                    ->options(
-                        Agenda::orderBy('tgl')->pluck('judul_agenda', 'id')
-                    ),
-                FileUpload::make('file_undangan')
-                    ->label('Undangan')
-                    ->downloadable()
-                    ->previewable(true)
-                    ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
-                Forms\Components\Toggle::make('status')->label('Status')->required()->default(true),
+                Section::make('Form Input Pemberitahuan')->id('data')->schema([
+                    Select::make('agenda_id')->label('Agenda')
+                        ->options(
+                            Agenda::orderBy('tgl')->pluck('judul_agenda', 'id')
+                        ),
+                    FileUpload::make('file_undangan')
+                        ->label('Undangan')
+                        ->downloadable()
+                        ->previewable(true)
+                        ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
+                    Forms\Components\Toggle::make('status')->label('Status')->required()->default(true),
+                ])
             ]);
     }
 

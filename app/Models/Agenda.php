@@ -23,4 +23,9 @@ class Agenda extends Model
     {
         return $this->hasOne(Notification::class);
     }
+
+    public function monev(): HasOne
+    {
+        return $this->hasOne(Monev::class);
+    }
 }
