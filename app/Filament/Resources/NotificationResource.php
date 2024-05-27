@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -29,21 +30,27 @@ class NotificationResource extends Resource
 
     protected static ?string $navigationGroup = 'Agenda';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return Notification::where('status', true)->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Section::make('Form Input Pemberitahuan')->id('data')->schema([
-                    Select::make('agenda_id')->label('Agenda')
+                    Select::make('agenda_id')
+                        ->label('Agenda')
                         ->options(
                             Agenda::orderBy('tgl')->pluck('judul_agenda', 'id')
-                        ),
+                        )->required(),
                     FileUpload::make('file_undangan')
                         ->label('Undangan')
                         ->downloadable()
                         ->previewable(true)
                         ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
-                    Forms\Components\Toggle::make('status')->label('Status')->required()->default(true),
+                    Forms\Components\Toggle::make('status')->label('Status')->default(true),
                 ])
             ]);
     }
@@ -52,9 +59,18 @@ class NotificationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('agenda.judul_agenda')->label('Judul Agenda')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('agenda.no_rapat')->label('Nomor Rapat')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('agenda.tgl')->date('d F Y')->label('Tgl Agenda')->sortable(),
+                Tables\Columns\TextColumn::make('agenda.judul_agenda')
+                    ->label('Judul Agenda')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('agenda.no_rapat')
+                    ->label('Nomor Rapat')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('agenda.tgl')
+                    ->date('d F Y')
+                    ->label('Tgl Agenda')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('file_undangan')
                     ->icon('heroicon-s-cloud-arrow-down')
                     ->label('Undangan')
@@ -65,7 +81,9 @@ class NotificationResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

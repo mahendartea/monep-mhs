@@ -49,12 +49,6 @@ class UserResource extends Resource
                         ->required()
                         ->label('Password')
                         ->visible($isCreate),
-                    Forms\Components\TextInput::make('password_confirmation')
-                        ->password()
-                        ->required()
-                        ->visible($isCreate)
-                        ->label('Konfirmasi Password')
-                        ->same('password'),
                 ])->columns(2),
                 Section::make('Info Pegawai')->id('personal')->schema([
                     Forms\Components\TextInput::make('nip')

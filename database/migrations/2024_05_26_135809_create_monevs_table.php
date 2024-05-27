@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('monevs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('agenda_id');
+            $table->string('perihal')->nullable();
+            $table->date('tgl_rapat')->nullable();
+            $table->time('pukul_mulai')->nullable();
+            $table->time('pukul_selesai')->nullable();
+            $table->string('tempat')->nullable();
             $table->string('file_monev')->nullable();
             $table->string('file_absen')->nullable();
             $table->string('notulen_rapat')->nullable();
