@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AgendaResource extends Resource
 {
@@ -87,7 +88,7 @@ class AgendaResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->requiresConfirmation(),
                 ]),
             ]);
     }
@@ -98,6 +99,7 @@ class AgendaResource extends Resource
             //
         ];
     }
+
 
     public static function getPages(): array
     {
