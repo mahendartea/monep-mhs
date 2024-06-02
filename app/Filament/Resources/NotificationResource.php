@@ -71,7 +71,7 @@ class NotificationResource extends Resource
                     ->date('d F Y')
                     ->label('Tgl Agenda')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('file_undangan')
+                Tables\Columns\IconColumn::make('file_undangan')
                     ->icon('heroicon-s-cloud-arrow-down')
                     ->label('Undangan')
                     ->color('primary'),

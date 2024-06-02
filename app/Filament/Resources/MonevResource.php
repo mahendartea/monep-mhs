@@ -13,6 +13,7 @@ use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Livewire;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -51,8 +52,8 @@ class MonevResource extends Resource
                             ->preload()->required(),
                         TextInput::make('perihal')->label('Perihal')->required(),
                         DatePicker::make('tgl_rapat')->label('Tgl Rapat')->required(),
-                        TextInput::make('pukul_mulai')->label('Mulai Pukul')->required(),
-                        TextInput::make('pukul_selesai')->label('Selesai Pukul')->required(),
+                        TimePicker::make('pukul_mulai')->label('Mulai Pukul')->required(),
+                        TimePicker::make('pukul_selesai')->label('Selesai Pukul')->required(),
                         TextInput::make('tempat')->label('Tempat')->required(),
                         Forms\Components\FileUpload::make('file_monev')
                             ->label('File Monev')

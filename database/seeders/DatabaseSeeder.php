@@ -15,19 +15,36 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password123')
-        ]);
+        $admin = User::factory()->create(
+            [
+                'name' => 'admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password123')
+            ],
+        );
+
+        $pimpinan = User::factory()->create(
+            [
+                'name' => 'pimpinan',
+                'email' => 'pimpinan@example.com',
+                'password' => bcrypt('password123')
+            ]
+        );
+
+        $pegawai = User::factory()->create(
+            [
+                'name' => 'pegawai',
+                'email' => 'pegawai@example.com',
+                'password' => bcrypt('password123')
+            ]
+        );
 
         \Spatie\Permission\Models\Role::create(['name' => 'admin']);
         \Spatie\Permission\Models\Role::create(['name' => 'pimpinan']);
         \Spatie\Permission\Models\Role::create(['name' => 'pegawai']);
 
-        $admin = User::where('email', 'admin@example.com')->first();
-        if ($admin) {
-            $admin->assignRole('admin');
-        }
+        $admin->assignRole('admin');
+        $pimpinan->assignRole('pimpinan');
+        $pegawai->assignRole('pegawai');
     }
 }
