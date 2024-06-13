@@ -14,6 +14,6 @@
  - `php artisan migrate`
  - `php artisan db:seed`
  - `npm install`
- - `npm run dev`
+ - `npm run build`
 
  6. Buka Herd dan Pilih menu `site` lalu pilih project yang diinginkan dan pilih `open with browser`
